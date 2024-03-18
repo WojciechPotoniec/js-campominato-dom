@@ -1,0 +1,48 @@
+main {
+    padding: 120px;
+    background-color: rgb(207, 181, 68)
+}
+section#grid {
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-wrap: wrap;
+}
+section#grid div.square {
+    cursor: crosshair;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+section#grid div.square.easy{
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+section#grid div.square.medium{
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+section#grid div.square.hard{
+    width: calc(100% / 7);
+    height: calc(100% / 7);
+}
+section#grid,
+div.square {
+    border: 1px solid black;
+    font-weight: bold;
+}
+div.square > span{
+    display: none;
+}
+div.square.even{
+    background-color: rgb(32, 133, 32);
+}
+div.square.odd{
+    background-color: rgb(20, 33, 102)
+}
+div.square.odd > span,
+div.square.even > span{
+    display: inline;
+}
