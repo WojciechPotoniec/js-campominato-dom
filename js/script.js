@@ -75,7 +75,7 @@ btnplay.addEventListener("click", function () {
       // aggiungo un nuovo quadrato alla grid che ho precedentemente selezionata
       grid.appendChild(newSquare);
     }
-  } else {}
+  } 
 });
 
 function generateNewGridSquare(content) {
