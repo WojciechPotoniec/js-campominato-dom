@@ -13,6 +13,8 @@ con difficoltà 3 => 49 caselle, con un numero compreso tra 1 e 49, divise in 7 
 
 // tmplate = <div class="square"></div>
 
+let message = document.getElementById("result");
+
 // creo una variabile globale e selezione l'elemento grid del DOM tramite id
 const grid = document.getElementById("grid");
 
@@ -28,8 +30,7 @@ btnplay.addEventListener("click", function () {
   let gameOver = false;
   grid.innerHTML = "";
   
-  let message = document.getElementById("result");
-  message = "";
+  message.innerHTML = "";
   
   let score = 0;
   
@@ -59,13 +60,27 @@ btnplay.addEventListener("click", function () {
             if (!bomblist.includes(parseInt(newSquare.innerHTML))) {
               newSquare.classList.add("safe");
               score++;
-              console.log("Il tuo punteggio è: ", score);
+              message.innerHTML = `<h3>Il tuo punteggio è di: ${score}</h3>`
+              // console.log("Il tuo punteggio è di: ", score);
             } else {
               newSquare.classList.add("unsafe");
+              
+              for (let index = 0; index < select; index++) {
+
+              const cells = document.querySelectorAll('.square');
+
+                if(bomblist.includes(parseInt(cells[index].innerHTML))){
+
+                  cells[index].classList.add('unsafe');
+                  message.innerHTML = `<h3>Hai perso!! Ritenta</h3>`
+                  
+                }
+              }
 
               gameOver = true;
 
-              console.log("Hai perso");
+              message.innerHTML = `<h3>Hai perso!! Ritenta</h3>`
+              // console.log("Hai perso");
             }
           }
         },
@@ -106,18 +121,9 @@ const btnreset = document.getElementById("reset");
 btnreset.addEventListener("click", function () {
   // rimuovo gli elementi contenuti nella griglia
   grid.innerHTML = "";
+  message.innerHTML = "";
 });
 
-/* Consegna
-Copiamo la griglia fatta ieri nella nuova repo e aggiungiamo la logica del gioco (attenzione: non bisogna copiare tutta la cartella dell'esercizio ma solo l'index.html, e le cartelle js/ css/ con i relativi script e fogli di stile, per evitare problemi con l'inizializzazione di git).
-
-Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: **nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
-In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
-
-La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
-
-Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
-*/
 
 // funzione per generare una lista di numeri casuali compresi tra 1 e il numero di caselle in base alla difficoltà
 function bombsGenerator(difficulty) {
@@ -130,3 +136,14 @@ function bombsGenerator(difficulty) {
   }
   return bombArray;
 }
+
+/* Consegna
+Copiamo la griglia fatta ieri nella nuova repo e aggiungiamo la logica del gioco (attenzione: non bisogna copiare tutta la cartella dell'esercizio ma solo l'index.html, e le cartelle js/ css/ con i relativi script e fogli di stile, per evitare problemi con l'inizializzazione di git).
+
+Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: **nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
+In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
+
+La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
+
+Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
+*/
