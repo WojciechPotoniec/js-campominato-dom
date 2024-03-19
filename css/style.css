@@ -28,7 +28,6 @@ section#grid div.square.hard{
     width: calc(100% / 7);
     height: calc(100% / 7);
 }
-section#grid,
 div.square {
     border: 1px solid black;
     font-weight: bold;
