@@ -28,6 +28,9 @@ const bombNumber = 16;
 btnplay.addEventListener("click", function () {
   let gameOver = false;
   grid.innerHTML = "";
+  let message = document.getElementById('result');
+  message = '';
+  let score = 0;
   // definisco una variabile globale e ne recupero l'elemento
   const select = parseInt(document.querySelector("select").value);
 
@@ -46,16 +49,19 @@ btnplay.addEventListener("click", function () {
           if (!bomblist.includes(parseInt(newSquare.innerHTML))) {
           
           newSquare.classList.add("safe");
+          score++;
+          console.log('Il tuo punteggio è: ', score);
         } else {
           newSquare.classList.add("unsafe");
           
             gameOver = true;
-
+            
+            console.log('Hai perso');
           }
-    
+          
       }
 
-        console.log(index + 1);
+        
       },{once: true});
 
       // aggiungo un nuovo quadrato alla grid che ho precedentemente selezionata
