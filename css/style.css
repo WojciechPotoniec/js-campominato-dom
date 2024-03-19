@@ -36,11 +36,11 @@ div.square {
 div.square > span{
     display: none;
 }
-div.square.even{
+div.square.safe{
     background-color: rgb(32, 133, 32);
 }
-div.square.odd{
-    background-color: rgb(20, 33, 102)
+div.square.unsafe{
+    background-color: rgb(255, 0, 0)
 }
 div.square.odd > span,
 div.square.even > span{
