@@ -19,27 +19,40 @@ const grid = document.getElementById("grid");
 // creo una variabile btnplay e seleziono il bottone dall'html tramite l'id
 const btnplay = document.getElementById("play");
 
+//definisco una variabile globale e associo un numero preciso di elementi
+const bombNumber = 16;
+
 // aggiungo un ascoltatore al button e attraverso un click accadranno cose.
 btnplay.addEventListener("click", function () {
   grid.innerHTML = "";
-  const select = document.querySelector("select").value;
-  if (select === "easy") {
+  // definisco una variabile globale e ne recupero l'elemento
+  const select = parseInt(document.querySelector("select").value);
+
+  if (select === 100) {
+    let bomblist = bombsGenerator(select);
+    console.log(bomblist);
+
     // creo un ciclo for per inserire all'interno di grid un quadrato con un numero all'interno
     for (let index = 0; index < 100; index++) {
       const newSquare = generateNewGridSquare(index + 1);
+      
       newSquare.classList.add("easy");
 
       newSquare.addEventListener("click", function () {
-        if (isEven(index)) {
-          newSquare.classList.toggle("even");
-        } else newSquare.classList.toggle("odd");
+        if (!bomblist.includes(parseInt(newSquare.innerText))) {
+          console.log(typeof parseInt(newSquare.innerText));
+          newSquare.classList.add("safe");
+        } else newSquare.classList.add("unsafe");
         console.log(index + 1);
       });
 
       // aggiungo un nuovo quadrato alla grid che ho precedentemente selezionata
       grid.appendChild(newSquare);
     }
-  } else if (select === "medium") {
+  } else if (select === 81) {
+    bomblist = bombsGenerator(select);
+    console.log(bomblist);
+
     // creo un ciclo for per inserire all'interno di grid un quadrato con un numero all'interno
     for (let index = 0; index < 81; index++) {
       const newSquare = generateNewGridSquare(index + 1);
@@ -47,9 +60,9 @@ btnplay.addEventListener("click", function () {
       newSquare.classList.add("medium");
 
       newSquare.addEventListener("click", function () {
-        if (isEven(index)) {
-          newSquare.classList.toggle("even");
-        } else newSquare.classList.toggle("odd");
+        if (bomblist.icludes()) {
+          newSquare.classList.add("safe");
+        } else newSquare.classList.add("unsafe");
         console.log(index + 1);
       });
 
@@ -58,22 +71,24 @@ btnplay.addEventListener("click", function () {
     }
   }
   // creo un ciclo for per inserire all'interno di grid un quadrato con un numero all'interno
-  else{
+  else { bomblist = bombsGenerator(select);
+    console.log(bomblist);
     for (let index = 0; index < 49; index++) {
       const newSquare = generateNewGridSquare(index + 1);
-        // aggiunta classe hard all'elemento precedentemente proso e associato alla funzione per generare 1 quadrato
+      // aggiunta classe hard all'elemento precedentemente proso e associato alla funzione per generare 1 quadrato
       newSquare.classList.add("hard");
 
       newSquare.addEventListener("click", function () {
         if (isEven(index)) {
-          newSquare.classList.toggle("even");
-        } else newSquare.classList.toggle("odd");
+          newSquare.classList.add("safe");
+        } else newSquare.classList.add("unsafe");
         console.log(index + 1);
       });
 
       // aggiungo un nuovo quadrato alla grid che ho precedentemente selezionata
       grid.appendChild(newSquare);
-    }}
+    }
+  }
 });
 
 function generateNewGridSquare(content) {
@@ -88,14 +103,15 @@ function generateNewGridSquare(content) {
 
   // ritorno l'elemento fuori dalla funzione
   return newEl;
+  console.log()
 }
 
-// creata funzione per determinare se un numero che divisibile per 2 riporta resto 0 e ritorna true 
-function isEven(number) {
-  if (number % 2 === 0) {
-    return true;
-  } else return false;
-}
+// creata funzione per determinare se un numero che divisibile per 2 riporta resto 0 e ritorna true
+// function isEven(number) {
+//   if (number % 2 === 0) {
+//     return true;
+//   } else return false;
+// }
 
 // creo una variabile btnreset e seleziono il bottone dall'html tramite l'id
 const btnreset = document.getElementById("reset");
@@ -105,7 +121,6 @@ btnreset.addEventListener("click", function () {
   // rimuovo gli elementi contenuti nella griglia
   grid.innerHTML = "";
 });
-
 
 /* Consegna
 Copiamo la griglia fatta ieri nella nuova repo e aggiungiamo la logica del gioco (attenzione: non bisogna copiare tutta la cartella dell'esercizio ma solo l'index.html, e le cartelle js/ css/ con i relativi script e fogli di stile, per evitare problemi con l'inizializzazione di git).
@@ -118,16 +133,14 @@ La partita termina quando il giocatore clicca su una bomba o quando raggiunge il
 Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
 */
 
-// funzione per generare un numero random compreso tra un minimo e un massimo e che viene associato ad un array vuoto
-function getRndmNumberUnique(min, max, list){
-    let isFound = false;
-    let randomNum;
-
-    while(isFound === false){
-        randomNum = getRndInteger(min, max);
-        if (!list.includes(randomNum)){
-            isFound = true;
-        }
+// funzione per generare una lista di numeri casuali compresi tra 1 e il numero di caselle in base alla difficoltà
+function bombsGenerator(difficulty) {
+  let bombArray = [];
+  while (bombArray.length < bombNumber) {
+    let bomb = getRndInteger(1, difficulty);
+    if (!bombArray.includes(bomb)) {
+      bombArray.push(bomb);
     }
-    return randomNum;
+  }
+  return bombArray;
 }
